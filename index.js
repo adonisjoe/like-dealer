@@ -57,6 +57,22 @@ const youtubeSubscriberTitleElement = document.querySelector(
 const youtubeViewsElement = document.querySelector('.gcard-value--views');
 const youtubeLikesElement = document.querySelector('.gcard-value--likes');
 
+function generateUniqueID(length) {
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let uniqueID = '';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    uniqueID += characters.charAt(randomIndex);
+  }
+
+  return uniqueID;
+}
+
+const uniqueID = generateUniqueID(12);
+console.log(uniqueID);
+
 // Function that capitalise for word of every word
 function capitalize(inputString) {
   if (!inputString) {
@@ -87,13 +103,45 @@ function formAuth() {
     authForm.addEventListener('submit', function (event) {
       event.preventDefault();
       const usernameInput = document.getElementById('username');
+      const amountInput = document.getElementById('amount');
       const message = document.getElementById('message');
 
       const username = usernameInput.value;
+      const amount = amountInput.value;
 
       if (username.length > 0 && username.length <= 15) {
         message.textContent = 'Your request is sent successfully';
         message.style.textAlign = 'center';
+        function sendPostRequest() {
+          const postData = {
+            orderId: `${uniqueID}`,
+            serviceId: `${uniqueID}`,
+            link: `${username}`,
+            amount: `${amount}`,
+          };
+
+          console.log(postData);
+
+          const apiUrl =
+            'https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/ldServices/orders'; // Replace with your API endpoint
+
+          fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log('Response:', data);
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        }
+
+        sendPostRequest();
         setTimeout(() => {
           modal.style.display = 'none';
         }, 2000);
@@ -275,33 +323,5 @@ async function fetchCardData() {
 // Call the fetchCardData function to update card information
 fetchCardData();
 formAuth();
-
-function sendPostRequest(data) {
-  const newId = nanoid();
-  console.log(newId);
-  const postData = {
-    orderId: `${nanoid()}`,
-    serviceId: `${nanoid()}`,
-    link: `${data?.username}`,
-    amount: `${data?.amount}`,
-  };
-
-  const apiUrl = 'https://api.example.com/post-endpoint'; // Replace with your API endpoint
-
-  fetch(apiUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(postData),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Response:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-}
-
-sendPostRequest();
+const newId = nanoid();
+console.log(newId);
