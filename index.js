@@ -275,3 +275,33 @@ async function fetchCardData() {
 // Call the fetchCardData function to update card information
 fetchCardData();
 formAuth();
+
+function sendPostRequest(data) {
+  const newId = nanoid();
+  console.log(newId);
+  const postData = {
+    orderId: `${nanoid()}`,
+    serviceId: `${nanoid()}`,
+    link: `${data?.username}`,
+    amount: `${data?.amount}`,
+  };
+
+  const apiUrl = 'https://api.example.com/post-endpoint'; // Replace with your API endpoint
+
+  fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(postData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Response:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+sendPostRequest();
