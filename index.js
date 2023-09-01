@@ -71,7 +71,6 @@ function generateUniqueID(length) {
 }
 
 const uniqueID = generateUniqueID(12);
-console.log(uniqueID);
 
 // Function that capitalise for word of every word
 function capitalize(inputString) {
@@ -88,6 +87,7 @@ function capitalize(inputString) {
 
 // function that checks for the user input
 function formAuth() {
+  if (!modal) return;
   modal.style.display = 'none';
   document.addEventListener('DOMContentLoaded', function () {
     const closeButton = document.querySelector('.close-button');
@@ -231,8 +231,9 @@ function filterCardInfo(cardData) {
     youtubeSubscriberTitleElement.textContent = capitalize(youtubeLikes.name);
   }
 
-  cards.addEventListener('click', (e) => {
+  document.addEventListener?.('click', (e) => {
     const clickedElement = e.target.closest('.gcard');
+    modal.style.display = 'none';
 
     function renderFormUI(className, pageType, formBtnTheme, formTitleTheme) {
       if (clickedElement.classList.contains(className)) {
@@ -240,6 +241,7 @@ function filterCardInfo(cardData) {
         formTitleEl.classList.add(formTitleTheme);
         button.classList.add(formBtnTheme);
         modal.style.display = 'block';
+        console.log(modal);
       }
     }
 
@@ -321,7 +323,5 @@ async function fetchCardData() {
 }
 
 // Call the fetchCardData function to update card information
-fetchCardData();
 formAuth();
-const newId = nanoid();
-console.log(newId);
+fetchCardData();
