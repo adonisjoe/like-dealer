@@ -101,26 +101,33 @@ function formAuth() {
     });
 
     authForm.addEventListener('submit', function (event) {
+      console.log('hello');
       event.preventDefault();
       const usernameInput = document.getElementById('username');
       const amountInput = document.getElementById('amount');
       const message = document.getElementById('message');
+      message.textContent = `Your request is sent successfully with Order Id: ${uniqueID}`;
+      message.style.textAlign = 'center';
+      message.style.fontSize = '12px';
+      message.style.marginTop = '20px';
+      message.style.color = 'green';
 
       const username = usernameInput.value;
       const amount = amountInput.value;
 
       if (username.length > 0 && username.length <= 15) {
-        message.textContent = 'Your request is sent successfully';
-        message.style.textAlign = 'center';
+        message.textContent = `Your request is sent successfully with Order Id: ${uniqueID}`;
+
+        message.style.color = 'green';
         function sendPostRequest() {
           const postData = {
-            orderId: `${uniqueID}`,
-            serviceId: `${uniqueID}`,
-            link: `${username}`,
-            amount: `${amount}`,
+            order: {
+              orderId: `${uniqueID}`,
+              serviceId: `${uniqueID}`,
+              link: `${username}`,
+              amount: `${amount}`,
+            },
           };
-
-          console.log(postData);
 
           const apiUrl =
             'https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/ldServices/orders'; // Replace with your API endpoint
@@ -144,9 +151,11 @@ function formAuth() {
         sendPostRequest();
         setTimeout(() => {
           modal.style.display = 'none';
-        }, 2000);
+        }, 3000);
       } else {
         message.textContent = 'Username must be between 1 and 15 characters.';
+
+        message.style.color = 'red';
       }
     });
   });
@@ -231,7 +240,7 @@ function filterCardInfo(cardData) {
     youtubeSubscriberTitleElement.textContent = capitalize(youtubeLikes.name);
   }
 
-  document.addEventListener?.('click', (e) => {
+  cards.addEventListener?.('click', (e) => {
     const clickedElement = e.target.closest('.gcard');
     modal.style.display = 'none';
 

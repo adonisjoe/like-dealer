@@ -1650,13 +1650,13 @@
             <span class="cross-line-2"></span>
           </button>
           <!-- Other modal content here -->
-          <form id="authForm" class="auth-form">
+          <form action="/submit" method="POST" id="authForm" class="auth-form">
             <h1 class="form-title"></h1>
             <div class="input-box">
               <input
                 class="username"
                 type="text"
-                name=""
+                name="username"
                 id="username"
                 placeholder="Username"
                 required
@@ -1666,7 +1666,7 @@
             <div class="input-box">
               <input
                 type="number"
-                name=""
+                name="amount"
                 id="amount"
                 placeholder="Amount"
                 required
