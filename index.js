@@ -236,12 +236,11 @@ function filterCardInfo(cardData) {
     modal.style.display = 'none';
 
     function renderFormUI(className, pageType, formBtnTheme, formTitleTheme) {
-      if (clickedElement.classList.contains(className)) {
+      if (clickedElement?.classList?.contains(className)) {
         formTitleEl.textContent = capitalize(pageType.name);
         formTitleEl.classList.add(formTitleTheme);
         button.classList.add(formBtnTheme);
         modal.style.display = 'block';
-        console.log(modal);
       }
     }
 
