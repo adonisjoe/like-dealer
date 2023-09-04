@@ -101,23 +101,23 @@ function formAuth() {
     });
 
     authForm.addEventListener('submit', function (event) {
-      console.log('hello');
       event.preventDefault();
-      const usernameInput = document.getElementById('username');
-      const amountInput = document.getElementById('amount');
+      const usernameField = document.getElementById('username');
       const message = document.getElementById('message');
-      message.textContent = `Your request is sent successfully with Order Id: ${uniqueID}`;
+
+      // message.textContent = `Your request is sent successfully with Order Id: ${uniqueID}`;
       message.style.textAlign = 'center';
       message.style.fontSize = '12px';
       message.style.marginTop = '20px';
       message.style.color = 'green';
 
-      const username = usernameInput.value;
-      const amount = amountInput.value;
+      // const username = document.getElementsById('username').value;
 
-      if (username.length > 0 && username.length <= 15) {
+      // Use a regular expression to check if the username includes 'http', '/', and '.com'
+      const pattern = /^(?=.*http)(?=.*\/)(?=.*\.com).+$/;
+
+      if (pattern.test(usernameField.value)) {
         message.textContent = `Your request is sent successfully with Order Id: ${uniqueID}`;
-
         message.style.color = 'green';
         function sendPostRequest() {
           const postData = {
@@ -153,7 +153,8 @@ function formAuth() {
           modal.style.display = 'none';
         }, 3000);
       } else {
-        message.textContent = 'Username must be between 1 and 15 characters.';
+        message.textContent = "Username must include 'http', '/', and '.com'";
+        console.log('error');
 
         message.style.color = 'red';
       }
