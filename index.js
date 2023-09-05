@@ -319,6 +319,8 @@ async function fetchCardData() {
     const response = await fetch(
       'https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/ldServices/services'
     );
+
+    console.log(response);
     if (!response?.ok) {
       throw new Error('Network response was not ok');
     }
@@ -332,5 +334,5 @@ async function fetchCardData() {
 }
 
 // Call the fetchCardData function to update card information
-formAuth();
 fetchCardData();
+formAuth();
