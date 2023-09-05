@@ -283,17 +283,6 @@ h1 {
   padding: 90px 140px 150px 460px;
 }
 
-#page>h2 {
-  font-family: 'Oswald', sans-serif;
-  font-weight: 700;
-  font-size: 36px;
-  color: #fff;
-  text-shadow: 2px 2px #23262b;
-  margin: 0 0 25px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
 #home {
   width: 104%;
   margin-left: -2%;
@@ -365,7 +354,7 @@ h1 {
 
 #content p {
   color: #23262b;
-  font-size: 18px;
+  font-size: 1.25rem;
   line-height: 26px;
   font-weight: 400;
   text-align: justify;
@@ -451,12 +440,16 @@ h1 {
 
 .gcard-value {
   position: absolute;
+  left: 15%;
   z-index: 2;
   right: 9px;
   bottom: 7px;
   color: #50565b;
   font-size: 16px;
   font-weight: 600;
+}
+.service-title {
+  text-align: center;
 }
 
 .gcard,
@@ -770,6 +763,18 @@ h1 {
   font-size: 33px !important;
 }
 
+.page-title {
+  font-size: 2rem;
+  margin-bottom: 4vw;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 2px 2px #23262b;
+  margin: 0 0 25px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 /* -------------- MOBILE WEBSITE  --------------*/
 
 @media only screen and (max-width: 768px) {
@@ -860,10 +865,9 @@ h1 {
     z-index: 1;
   }
 
-  #page>h2 {
-    font-size: 7vw;
-    margin-bottom: 4vw;
-  }
+    .page-title {
+      font-size: 1rem;
+    }
 
   #home {
     width: 100%;

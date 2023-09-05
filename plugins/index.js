@@ -162,13 +162,24 @@ function formAuth() {
   });
 }
 
+// re-use
+function getCardsByPlatform(cards, platform) {
+  return cards.filter((card) => card.platform === platform);
+}
+
+
 // Assuming you have a function to update the card information
 function filterCardInfo(cardData) {
+  const PER_1000 = " per 1k";
+  const MINIMUM_ORDER = "Mininum order 1000.";
+
   // Update the card information here
   const facebookData = cardData?.services?.filter(
     (data) => data?.platform?.toLowerCase?.() == 'facebook'
   );
   const [facebookPost, facebookPage] = facebookData;
+
+  //  facebookData.map(el => { })
 
   if (
     facebookLikesElement ||
@@ -176,10 +187,10 @@ function filterCardInfo(cardData) {
     facebookPostTitleElement ||
     facebookLikesTitleElement
   ) {
-    facebookPostElement.textContent = facebookPost?.pricePer1000;
-    facebookLikesElement.textContent = facebookPage?.pricePer1000;
-    facebookPostTitleElement.textContent = capitalize(facebookPost?.name);
-    facebookLikesTitleElement.textContent = capitalize(facebookPage?.name);
+    facebookPostElement.textContent = facebookPost?.pricePer1000 + PER_1000;
+    facebookLikesElement.textContent = facebookPage?.pricePer1000 + PER_1000;
+    facebookPostTitleElement.textContent = capitalize(facebookPost?.type);
+    facebookLikesTitleElement.textContent = capitalize(facebookPage?.type);
   }
 
   const tiktokData = cardData?.services?.filter(
@@ -194,10 +205,10 @@ function filterCardInfo(cardData) {
     tiktokVideoTitleElement ||
     tiktokFollowersTitleElement
   ) {
-    tiktokVideoElement.textContent = tiktokLikes.pricePer1000;
-    tiktokFollowersElement.textContent = tiktokFollowers.pricePer1000;
-    tiktokVideoTitleElement.textContent = capitalize(tiktokLikes.name);
-    tiktokFollowersTitleElement.textContent = capitalize(tiktokFollowers.name);
+    tiktokVideoElement.textContent = tiktokLikes.pricePer1000 + PER_1000;
+    tiktokFollowersElement.textContent = tiktokFollowers.pricePer1000 + PER_1000;
+    tiktokVideoTitleElement.textContent = capitalize(tiktokLikes.type);
+    tiktokFollowersTitleElement.textContent = capitalize(tiktokFollowers.type);
   }
 
   const instagramData = cardData?.services?.filter(
@@ -211,11 +222,11 @@ function filterCardInfo(cardData) {
     instagramLikeTitleElement ||
     instagramFollowerTitleElement
   ) {
-    instagramLikeElement.textContent = instagramLikes.pricePer1000;
-    instagramFollowerElement.textContent = instagramFollowers.pricePer1000;
-    instagramLikeTitleElement.textContent = capitalize(instagramLikes.name);
+    instagramLikeElement.textContent = instagramLikes.pricePer1000 + PER_1000;
+    instagramFollowerElement.textContent = instagramFollowers.pricePer1000 + PER_1000;
+    instagramLikeTitleElement.textContent = capitalize(instagramLikes.type);
     instagramFollowerTitleElement.textContent = capitalize(
-      instagramFollowers.name
+      instagramFollowers.type
     );
   }
 
@@ -233,13 +244,15 @@ function filterCardInfo(cardData) {
     youtubeLikesTitleElement ||
     youtubeSubscriberTitleElement
   ) {
-    youtubeSubscriberElement.textContent = youtubeSubscribers.pricePer1000;
-    youtubeViewsElement.textContent = capitalize(youtubeViews.pricePer1000);
-    youtubeLikesElement.textContent = capitalize(youtubeLikes.pricePer1000);
-    youtubeViewsTitleElement.textContent = capitalize(youtubeSubscribers.name);
-    youtubeLikesTitleElement.textContent = capitalize(youtubeViews.name);
-    youtubeSubscriberTitleElement.textContent = capitalize(youtubeLikes.name);
+    youtubeSubscriberElement.textContent = youtubeSubscribers.pricePer1000 + PER_1000;
+    youtubeViewsElement.textContent = capitalize(youtubeViews.pricePer1000) + PER_1000;
+    youtubeLikesElement.textContent = capitalize(youtubeLikes.pricePer1000) + PER_1000;
+    youtubeViewsTitleElement.textContent = capitalize(youtubeSubscribers.type);
+    youtubeLikesTitleElement.textContent = capitalize(youtubeViews.type);
+    youtubeSubscriberTitleElement.textContent = capitalize(youtubeLikes.type);
   }
+
+  let cards = [];
 
   cards.addEventListener?.('click', (e) => {
     const clickedElement = e.target.closest('.gcard');
@@ -318,16 +331,16 @@ async function fetchCardData() {
   try {
     const response = await fetch(
       'https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/ldServices/services'
-    );
+    ).then((response) => response.json().then((cardData) => {
+      if (!cardData) {
+        throw new Error('Network response was not ok');
+      }
 
-    console.log(response);
-    if (!response?.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const cardData = await response?.json();
+      console.log(cardData);
 
-    // Update card information
-    filterCardInfo(cardData);
+      // Update card information
+      filterCardInfo(cardData);
+    }));    
   } catch (error) {
     console.error('Error fetching card data:', error);
   }
@@ -335,4 +348,4 @@ async function fetchCardData() {
 
 // Call the fetchCardData function to update card information
 fetchCardData();
-formAuth();
+// formAuth();
