@@ -1,8 +1,6 @@
-# This is a basic workflow to help you get started with Actions
+# Live Production CD Pipeline for like-dealer.com
 
-name: CI
-env:
-     CI: false
+name: PROD like-dealer.com
 
 # Controls when the workflow will run
 on:
@@ -37,7 +35,7 @@ jobs:
       - name: deploy
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          server: ${{secrets.FTP_SERVER}}
-          username: ${{secrets.FTP_USERNAME}}
+          server: ftp.like-dealer.com
+          username: deploy@like-dealer.com
           password: ${{secrets.FTP_PASSWORD}}
           local-dir: ./
