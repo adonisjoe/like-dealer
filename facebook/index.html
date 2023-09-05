@@ -1158,6 +1158,13 @@
         border-radius: 50px;
         display: block;
         margin: 0 auto;
+        transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+      }
+      .button:hover {
+        box-shadow: 0 10px 8px rgba(0, 0, 0, 0.3); /* Shadow effect on hover */
+      }
+      .button:active {
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); /* Shadow effect on click */
       }
 
       .button--facebook {
@@ -1191,10 +1198,6 @@
         );
         z-index: -1;
         transition: opacity 0.3s ease-in-out;
-        opacity: 1;
-      }
-
-      .button--facebook::after {
         opacity: 1;
       }
     </style>
