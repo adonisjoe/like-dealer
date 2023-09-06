@@ -72,13 +72,17 @@ function getCardsByPlatform(cards, platform) {
   return cards.filter((card) => card.platform === platform);
 }
 
+function loopData(productData) {
+  return productData.map((data) => data);
+}
+
 function filterCardInfo(cardData) {
   const PER_1000 = ' per 1k';
   const MINIMUM_ORDER = 'Mininum order 1000.';
 
   // Update the card information here
   const facebookData = filterProducts(cardData, 'facebook');
-  const [facebookPost, facebookPage] = facebookData;
+  const [facebookPost, facebookPage] = loopData(facebookData);
   // console.log(facebookData);
 
   //  facebookData.map(el => { })
@@ -93,7 +97,7 @@ function filterCardInfo(cardData) {
 
   const tiktokData = filterProducts(cardData, 'tiktok');
 
-  const [tiktokLikes, tiktokFollowers] = tiktokData;
+  const [tiktokLikes, tiktokFollowers] = loopData(tiktokData);
 
   if (checkProductElement(tiktokVideoElement, tiktokFollowersElement)) {
     updateCardDetail(tiktokLikes, tiktokVideoElement, PER_1000);
@@ -104,7 +108,7 @@ function filterCardInfo(cardData) {
   }
 
   const instagramData = filterProducts(cardData, 'instagram');
-  const [instagramLikes, instagramFollowers] = instagramData;
+  const [instagramLikes, instagramFollowers] = loopData(instagramData);
 
   if (checkProductElement(instagramLikeElement, instagramFollowerElement)) {
     updateCardDetail(instagramLikes, instagramLikeElement, PER_1000);
@@ -116,11 +120,8 @@ function filterCardInfo(cardData) {
 
   const youtubeData = filterProducts(cardData, 'youtube');
 
-  youtubeData.forEach((data) => {
-    console.log(data);
-  });
-
-  const [youtubeSubscribers, youtubeViews, youtubeLikes] = youtubeData;
+  const [youtubeSubscribers, youtubeViews, youtubeLikes] =
+    loopData(youtubeData);
 
   if (
     checkProductElement(
@@ -155,7 +156,6 @@ function filterProducts(data, platform) {
   return data?.services?.filter((data) => data?.platform === platform);
 }
 
-// Fetch card data from the API
 async function fetchCardData(fetchUrl) {
   try {
     await fetch(fetchUrl).then((response) =>
@@ -172,7 +172,6 @@ async function fetchCardData(fetchUrl) {
   }
 }
 
-// Call the fetchCardData function to update card information
 fetchCardData(
   'https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/ldServices/services'
 );
