@@ -136,7 +136,6 @@ function filterCardInfo(cardData) {
 }
 
 function updateCardUrl(className, cardURL) {
-  console.log(`hello`);
   return (document.querySelector(className).href = cardURL);
 }
 
