@@ -65,11 +65,7 @@
 
     <link rel="stylesheet" type="text/css" href="../assets/main.css" />
     <script defer src="../plugins/gtm.js"></script>
-    <script
-      defer
-      src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"
-    ></script>
-    <script defer src="../plugins/index.js"></script>
+    <script defer src="../plugins/cards.js"></script>
   </head>
 
   <body
@@ -502,66 +498,6 @@
         </div>
       </div>
       <!-- END OF INNER -->
-    </div>
-    <!-- END OF WRAPPER -->
-
-    <!-- <div id="gboverlay">
-      <div id="gbclose"></div>
-      <div id="gbmouse"></div>
-    </div> -->
-
-    <div class="wrapper">
-      <div class="modal">
-        <div class="modal-content">
-          <button class="close-button">
-            <span class="cross-line-1"></span>
-            <span class="cross-line-2"></span>
-          </button>
-          <!-- Other modal content here -->
-          <form action="/submit" method="POST" id="authForm" class="auth-form">
-            <h1 class="form-title"></h1>
-            <div class="input-box">
-              <input
-                class="username"
-                type="text"
-                name="username"
-                id="username"
-                placeholder="Username"
-                required
-              />
-              <box-icon class="input-logo" type="solid" name="user"></box-icon>
-            </div>
-            <div class="input-box">
-              <input
-                class="email"
-                type="email"
-                name="email"
-                id="email"
-                placeholder="email"
-                required
-              />
-              <box-icon
-                class="input-logo"
-                type="solid"
-                name="envelope"
-              ></box-icon>
-            </div>
-            <div class="input-box">
-              <input
-                type="number"
-                name="amount"
-                id="amount"
-                placeholder="Amount"
-                required
-              />
-            </div>
-
-            <button id="submit" class="button auth-button">Send</button>
-
-            <p style="margin-bottom: 20px" id="message"></p>
-          </form>
-        </div>
-      </div>
     </div>
 
     <script
