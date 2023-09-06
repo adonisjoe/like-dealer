@@ -37,5 +37,5 @@ jobs:
         with:
           server: ftp.like-dealer.com
           username: deploy@like-dealer.com
-          password: Y7qfI$9n)1oS
+          password: ${{secrets.FTP_PASSWORD}}
           local-dir: ./
