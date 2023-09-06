@@ -1,83 +1,66 @@
-const modal = document.querySelector('.modal');
-const hiddenEl = document.querySelector('#inner');
+const {
+  modal,
+  hiddenEl,
+  facebookLikesElement,
+  facebookPostElement,
+  tiktokVideoElement,
+  tiktokFollowersElement,
+  instagramLikeElement,
+  instagramFollowerElement,
+  youtubeSubscriberElement,
+  youtubeViewsElement,
+  youtubeLikesElement,
+} = elementsSelect();
 
-const button = document.querySelector('.button');
+function elementsSelect() {
+  const modal = document.querySelector('.modal');
+  const hiddenEl = document.querySelector('#inner');
 
-const formTitleEl = document.querySelector('.form-title');
-const instagramLikeElement = document.querySelector(
-  '.gcard-value--instagram-like'
-);
-const instagramFollowerElement = document.querySelector(
-  '.gcard-value--instagram-followers'
-);
+  const instagramLikeElement = document.querySelector(
+    '.gcard-value--instagram-like'
+  );
+  const instagramFollowerElement = document.querySelector(
+    '.gcard-value--instagram-followers'
+  );
+  const tiktokVideoElement = document.querySelector(
+    '.gcard-value--tiktok-likes'
+  );
+  const tiktokFollowersElement = document.querySelector(
+    '.gcard-value--tiktok-followers'
+  );
 
-const instagramLikeTitleElement = document.querySelector(
-  '.gcard-value--instagram-like-title'
-);
-const instagramFollowerTitleElement = document.querySelector(
-  '.gcard-value--instagram-followers-title'
-);
+  const facebookPostElement = document.querySelector(
+    '.gcard-value--facebook-post'
+  );
+  const facebookLikesElement = document.querySelector(
+    '.gcard-value--facebook-likes'
+  );
 
-const tiktokVideoElement = document.querySelector('.gcard-value--tiktok-likes');
-const tiktokFollowersElement = document.querySelector(
-  '.gcard-value--tiktok-followers'
-);
-const tiktokVideoTitleElement = document.querySelector(
-  '.gcard-value--tiktok-likes-title'
-);
-const tiktokFollowersTitleElement = document.querySelector(
-  '.gcard-value--tiktok-followers-title'
-);
+  const youtubeSubscriberElement = document.querySelector(
+    '.gcard-value--subscribers'
+  );
 
-const facebookPostElement = document.querySelector(
-  '.gcard-value--facebook-post'
-);
-const facebookLikesElement = document.querySelector(
-  '.gcard-value--facebook-likes'
-);
-const facebookPostTitleElement = document.querySelector(
-  '.gcard-value--facebook-post-title'
-);
-const facebookLikesTitleElement = document.querySelector(
-  '.gcard-value--facebook-likes-title'
-);
-
-const youtubeSubscriberElement = document.querySelector(
-  '.gcard-value--subscribers'
-);
-const youtubeViewsTitleElement = document.querySelector(
-  '.gcard-value--views-title'
-);
-const youtubeLikesTitleElement = document.querySelector(
-  '.gcard-value--likes-title'
-);
-const youtubeSubscriberTitleElement = document.querySelector(
-  '.gcard-value--subscribers-title'
-);
-const youtubeViewsElement = document.querySelector('.gcard-value--views');
-const youtubeLikesElement = document.querySelector('.gcard-value--likes');
-
-function generateUniqueID(length) {
-  const characters =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let uniqueID = '';
-
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    uniqueID += characters.charAt(randomIndex);
-  }
-
-  return uniqueID;
+  const youtubeViewsElement = document.querySelector('.gcard-value--views');
+  const youtubeLikesElement = document.querySelector('.gcard-value--likes');
+  return {
+    modal,
+    hiddenEl,
+    facebookLikesElement,
+    facebookPostElement,
+    tiktokVideoElement,
+    tiktokFollowersElement,
+    instagramLikeElement,
+    instagramFollowerElement,
+    youtubeSubscriberElement,
+    youtubeViewsElement,
+    youtubeLikesElement,
+  };
 }
 
-const uniqueID = generateUniqueID(12);
-
-// Function that capitalise for word of every word
 function capitalize(inputString) {
   if (!inputString) {
     return '';
   }
-
   return inputString
     .toLowerCase()
     .split(' ')
@@ -85,308 +68,105 @@ function capitalize(inputString) {
     .join(' ');
 }
 
-// function that checks for the user input
-function formAuth() {
-  if (!modal) return;
-  modal.style.display = 'none';
-  document.addEventListener('DOMContentLoaded', function () {
-    const closeButton = document.querySelector('.close-button');
-    hiddenEl.style.opacity = 1;
-
-    const authForm = document.getElementById('authForm');
-
-    closeButton.addEventListener('click', function () {
-      modal.style.display = 'none';
-      hiddenEl.style.opacity = 0;
-    });
-
-    authForm.addEventListener('submit', function (event) {
-      event.preventDefault();
-      const usernameField = document.getElementById('username');
-      const message = document.getElementById('message');
-
-      // message.textContent = `Your request is sent successfully with Order Id: ${uniqueID}`;
-      message.style.textAlign = 'center';
-      message.style.fontSize = '12px';
-      message.style.marginTop = '20px';
-      message.style.color = 'green';
-
-      // const username = document.getElementsById('username').value;
-
-      // Use a regular expression to check if the username includes 'http', '/', and '.com'
-      const pattern = /^(?=.*http)(?=.*\/)(?=.*\.com).+$/;
-
-      if (pattern.test(usernameField.value)) {
-        message.textContent = `Your request is sent successfully with Order Id: ${uniqueID}`;
-        message.style.color = 'green';
-        function sendPostRequest() {
-          const postData = {
-            order: {
-              orderId: `${uniqueID}`,
-              serviceId: `${uniqueID}`,
-              link: `${username}`,
-              amount: `${amount}`,
-            },
-          };
-
-          const apiUrl =
-            'https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/ldServices/orders'; // Replace with your API endpoint
-
-          fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(postData),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log('Response:', data);
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
-        }
-
-        sendPostRequest();
-        setTimeout(() => {
-          modal.style.display = 'none';
-        }, 3000);
-      } else {
-        message.textContent = "Username must include 'http', '/', and '.com'";
-        console.log('error');
-
-        message.style.color = 'red';
-      }
-    });
-  });
-}
-
-<<<<<<< HEAD:index.js
-function renderPlaceholder(className, pageOne, pageTwo, PageThree = '') {
-  return (document.querySelector(className).placeholder = `Type your ${pageOne?.input}`;
-  document.querySelector(className).placeholder = `Type your ${pageTwo?.input}`;
-  document.querySelector(className ).placeholder = `Type your ${PageThree?.input}`;)
-}
-
-=======
-// re-use
 function getCardsByPlatform(cards, platform) {
   return cards.filter((card) => card.platform === platform);
 }
 
-
->>>>>>> ab27d37cc9c76702418b4ee5befa9a1bd808d2aa:plugins/index.js
-// Assuming you have a function to update the card information
 function filterCardInfo(cardData) {
-  const PER_1000 = " per 1k";
-  const MINIMUM_ORDER = "Mininum order 1000.";
+  const PER_1000 = ' per 1k';
+  const MINIMUM_ORDER = 'Mininum order 1000.';
 
   // Update the card information here
-  const facebookData = cardData?.services?.filter(
-    (data) => data?.platform?.toLowerCase?.() == 'facebook'
-  );
+  const facebookData = filterProducts(cardData, 'facebook');
   const [facebookPost, facebookPage] = facebookData;
   // console.log(facebookData);
 
   //  facebookData.map(el => { })
 
-  if (
-    facebookLikesElement ||
-    facebookPostElement ||
-    facebookPostTitleElement ||
-    facebookLikesTitleElement
-  ) {
-<<<<<<< HEAD:index.js
-    facebookPostElement.textContent = facebookPost?.pricePer1000;
-    facebookLikesElement.textContent = facebookPage?.pricePer1000;
-    facebookPostTitleElement.textContent = capitalize(facebookPost?.name);
-    facebookLikesTitleElement.textContent = capitalize(facebookPage?.name);
+  if (checkProductElement(facebookLikesElement, facebookPostElement)) {
+    updateCardDetail(facebookPost, facebookPostElement, PER_1000);
+    updateCardDetail(facebookPage, facebookLikesElement, PER_1000);
 
-    console.log(renderPlaceholder('.username', facebookPost, facebookPage));
-=======
-    facebookPostElement.textContent = facebookPost?.pricePer1000 + PER_1000;
-    facebookLikesElement.textContent = facebookPage?.pricePer1000 + PER_1000;
-    facebookPostTitleElement.textContent = capitalize(facebookPost?.type);
-    facebookLikesTitleElement.textContent = capitalize(facebookPage?.type);
->>>>>>> ab27d37cc9c76702418b4ee5befa9a1bd808d2aa:plugins/index.js
+    updateCardUrl('.gcard-facebook-post', facebookPost.paymentUrl);
+    updateCardUrl('.gcard-facebook-page', facebookPage.paymentUrl);
   }
 
-  const tiktokData = cardData?.services?.filter(
-    (data) => data?.platform === 'tiktok'
-  );
+  const tiktokData = filterProducts(cardData, 'tiktok');
 
   const [tiktokLikes, tiktokFollowers] = tiktokData;
 
-  if (
-    tiktokVideoElement ||
-    tiktokFollowersElement ||
-    tiktokVideoTitleElement ||
-    tiktokFollowersTitleElement
-  ) {
-<<<<<<< HEAD:index.js
-    tiktokVideoElement.textContent = tiktokLikes.pricePer1000;
-    tiktokFollowersElement.textContent = tiktokFollowers.pricePer1000;
-    tiktokVideoTitleElement.textContent = capitalize(tiktokLikes.name);
-    tiktokFollowersTitleElement.textContent = capitalize(tiktokFollowers.name);
+  if (checkProductElement(tiktokVideoElement, tiktokFollowersElement)) {
+    updateCardDetail(tiktokLikes, tiktokVideoElement, PER_1000);
+    updateCardDetail(tiktokFollowers, tiktokFollowersElement, PER_1000);
 
-    renderPlaceholder('.username', tiktokFollowers, tiktokLikes);
-=======
-    tiktokVideoElement.textContent = tiktokLikes.pricePer1000 + PER_1000;
-    tiktokFollowersElement.textContent = tiktokFollowers.pricePer1000 + PER_1000;
-    tiktokVideoTitleElement.textContent = capitalize(tiktokLikes.type);
-    tiktokFollowersTitleElement.textContent = capitalize(tiktokFollowers.type);
->>>>>>> ab27d37cc9c76702418b4ee5befa9a1bd808d2aa:plugins/index.js
+    updateCardUrl('.gcard-tiktok-likes', tiktokLikes.paymentUrl);
+    updateCardUrl('.gcard-tiktok-followers', tiktokFollowers.paymentUrl);
   }
 
-  const instagramData = cardData?.services?.filter(
-    (data) => data?.platform?.toLowerCase?.() == 'instagram'
-  );
+  const instagramData = filterProducts(cardData, 'instagram');
   const [instagramLikes, instagramFollowers] = instagramData;
 
-  if (
-    instagramLikeElement ||
-    instagramFollowerElement ||
-    instagramLikeTitleElement ||
-    instagramFollowerTitleElement
-  ) {
-    instagramLikeElement.textContent = instagramLikes.pricePer1000 + PER_1000;
-    instagramFollowerElement.textContent = instagramFollowers.pricePer1000 + PER_1000;
-    instagramLikeTitleElement.textContent = capitalize(instagramLikes.type);
-    instagramFollowerTitleElement.textContent = capitalize(
-      instagramFollowers.type
-    );
+  if (checkProductElement(instagramLikeElement, instagramFollowerElement)) {
+    updateCardDetail(instagramLikes, instagramLikeElement, PER_1000);
+    updateCardDetail(instagramFollowers, instagramFollowerElement, PER_1000);
 
-    renderPlaceholder('.username', instagramLikes, instagramFollowers);
+    updateCardUrl('.gcard-instagram-likes', instagramLikes.paymentUrl);
+    updateCardUrl('.gcard-instagram-follower', instagramFollowers.paymentUrl);
   }
 
-  const youtubeData = cardData?.services?.filter(
-    (data) => data?.platform?.toLowerCase?.() == 'youtube'
-  );
+  const youtubeData = filterProducts(cardData, 'youtube');
 
   const [youtubeSubscribers, youtubeViews, youtubeLikes] = youtubeData;
 
   if (
-    youtubeSubscriberElement ||
-    youtubeViewsElement ||
-    youtubeLikesElement ||
-    youtubeViewsTitleElement ||
-    youtubeLikesTitleElement ||
-    youtubeSubscriberTitleElement
+    checkProductElement(
+      youtubeSubscriberElement,
+      youtubeViewsElement,
+      youtubeLikesElement
+    )
   ) {
-<<<<<<< HEAD:index.js
-    youtubeSubscriberElement.textContent = youtubeSubscribers.pricePer1000;
-    youtubeViewsElement.textContent = capitalize(youtubeViews.pricePer1000);
-    youtubeLikesElement.textContent = capitalize(youtubeLikes.pricePer1000);
-    youtubeViewsTitleElement.textContent = capitalize(youtubeSubscribers.name);
-    youtubeLikesTitleElement.textContent = capitalize(youtubeViews.name);
-    youtubeSubscriberTitleElement.textContent = capitalize(youtubeLikes.name);
+    updateCardDetail(youtubeSubscribers, youtubeSubscriberElement, PER_1000);
+    updateCardDetail(youtubeLikes, youtubeLikesElement, PER_1000);
+    updateCardDetail(youtubeViews, youtubeViewsElement, PER_1000);
 
-    renderPlaceholder(
-      '.username',
-      youtubeSubscribers,
-      youtubeViews,
-      youtubeLikes
-    );
-=======
-    youtubeSubscriberElement.textContent = youtubeSubscribers.pricePer1000 + PER_1000;
-    youtubeViewsElement.textContent = capitalize(youtubeViews.pricePer1000) + PER_1000;
-    youtubeLikesElement.textContent = capitalize(youtubeLikes.pricePer1000) + PER_1000;
-    youtubeViewsTitleElement.textContent = capitalize(youtubeSubscribers.type);
-    youtubeLikesTitleElement.textContent = capitalize(youtubeViews.type);
-    youtubeSubscriberTitleElement.textContent = capitalize(youtubeLikes.type);
->>>>>>> ab27d37cc9c76702418b4ee5befa9a1bd808d2aa:plugins/index.js
+    updateCardUrl('.gcard-youtube-likes', youtubeLikes.paymentUrl);
+    updateCardUrl('.gcard-youtube-views', youtubeViews.paymentUrl);
+    updateCardUrl('.gcard-youtube-subscribers', youtubeSubscribers.paymentUrl);
   }
+}
 
-  let cards = [];
+function updateCardUrl(className, cardURL) {
+  console.log(`hello`);
+  return (document.querySelector(className).href = cardURL);
+}
 
-  cards.addEventListener?.('click', (e) => {
-    const clickedElement = e.target.closest('.gcard');
-    modal.style.display = 'none';
+function updateCardDetail(productType, productEl, pricePer) {
+  return (productEl.textContent = productType.pricePer1000 + pricePer);
+}
 
-    function renderFormUI(className, pageType, formBtnTheme, formTitleTheme) {
-      if (clickedElement?.classList?.contains(className)) {
-        formTitleEl.textContent = capitalize(pageType.name);
-        formTitleEl.classList.add(formTitleTheme);
-        button.classList.add(formBtnTheme);
-        modal.style.display = 'block';
-      }
-    }
+function checkProductElement(productEl, productEl1, productEl2 = '') {
+  return productEl || productEl1 || productEl2;
+}
 
-    renderFormUI(
-      'gcard-instagram-likes',
-      instagramLikes,
-      'button--instagram',
-      'form-title--gradient-bg'
-    );
-
-    renderFormUI(
-      'gcard-instagram-follower',
-      instagramFollowers,
-      'button--instagram',
-      'form-title--gradient-bg'
-    );
-
-    renderFormUI(
-      'gcard-tiktok-likes',
-      tiktokLikes,
-      'button--tiktok',
-      'form-title--gradient-bg'
-    );
-    renderFormUI(
-      'gcard-tiktok-followers',
-      tiktokFollowers,
-      'button--tiktok',
-      'form-title--gradient-bg'
-    );
-    renderFormUI(
-      'gcard-youtube-likes',
-      youtubeLikes,
-      'button--youtube',
-      'form-title-youtube--gradient-bg'
-    );
-    renderFormUI(
-      'gcard-youtube-subscribers',
-      youtubeSubscribers,
-      'button--youtube',
-      'form-title-youtube--gradient-bg'
-    );
-    renderFormUI(
-      'gcard-youtube-views',
-      youtubeViews,
-      'button--youtube',
-      'form-title-youtube--gradient-bg'
-    );
-    renderFormUI(
-      'gcard-facebook-post',
-      facebookPost,
-      'button--facebook',
-      'form-title-facebook--gradient-bg'
-    );
-    renderFormUI(
-      'gcard-facebook-page',
-      facebookPage,
-      'button--facebook',
-      'form-title-facebook--gradient-bg'
-    );
-  });
+function filterProducts(data, platform) {
+  return data?.services?.filter((data) => data?.platform === platform);
 }
 
 // Fetch card data from the API
 async function fetchCardData() {
   try {
-    const response = await fetch(
+    await fetch(
       'https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/ldServices/services'
-    ).then((response) => response.json().then((cardData) => {
-      if (!cardData) {
-        throw new Error('Network response was not ok');
-      }
+    ).then((response) =>
+      response.json().then((cardData) => {
+        if (!cardData) {
+          throw new Error('Network response was not ok');
+        }
 
-      console.log(cardData);
-
-      // Update card information
-      filterCardInfo(cardData);
-    }));    
+        // Update card information
+        filterCardInfo(cardData);
+      })
+    );
   } catch (error) {
     console.error('Error fetching card data:', error);
   }
@@ -394,4 +174,3 @@ async function fetchCardData() {
 
 // Call the fetchCardData function to update card information
 fetchCardData();
-// formAuth();

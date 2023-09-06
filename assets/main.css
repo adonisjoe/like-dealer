@@ -362,7 +362,7 @@ h1 {
   letter-spacing: 0.2px;
 }
 
-#content p+p {
+#content p + p {
   margin-top: 10px;
 }
 
@@ -394,6 +394,7 @@ h1 {
   margin-right: 5%;
   cursor: pointer;
   transform-origin: 50% 0;
+  display: block;
 }
 
 .gcard svg {
@@ -519,8 +520,8 @@ h1 {
   z-index: 3;
   opacity: 0;
   transform: scale(1.3) rotateX(10deg);
-  transition: transform 400ms, opacity 400ms, height 400ms,
-    margin-top 400ms, top 400ms;
+  transition: transform 400ms, opacity 400ms, height 400ms, margin-top 400ms,
+    top 400ms;
 }
 
 #generatorbox.show {
@@ -865,9 +866,9 @@ h1 {
     z-index: 1;
   }
 
-    .page-title {
-      font-size: 1rem;
-    }
+  .page-title {
+    font-size: 1rem;
+  }
 
   #home {
     width: 100%;
@@ -920,7 +921,7 @@ h1 {
     letter-spacing: 0.1vw;
   }
 
-  #content p+p {
+  #content p + p {
     margin-top: 4vw;
   }
 
@@ -1059,13 +1060,15 @@ h1 {
 }
 
 .form-title-youtube--gradient-bg {
-  background: linear-gradient(45deg,
-      #ff0000,
-      #ff0000 33.33%,
-      #f51c1c 33.33%,
-      #400c0c 66.66%,
-      #492020 66.66%,
-      #1f0404);
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff0000 33.33%,
+    #f51c1c 33.33%,
+    #400c0c 66.66%,
+    #492020 66.66%,
+    #1f0404
+  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1134,8 +1137,8 @@ input:focus {
   z-index: 3;
   opacity: 1;
   transform: translate(-50%, -50%);
-  transition: transform 400ms, opacity 400ms, height 400ms,
-    margin-top 400ms, top 400ms;
+  transition: transform 400ms, opacity 400ms, height 400ms, margin-top 400ms,
+    top 400ms;
   z-index: 5000;
 }
 
@@ -1264,13 +1267,15 @@ input:focus {
   width: calc(100% + 12px);
   height: calc(100% + 12px);
   border-radius: inherit;
-  background: linear-gradient(45deg,
-      #ff0000,
-      #ff0000 33.33%,
-      #f51c1c 33.33%,
-      #400c0c 66.66%,
-      #492020 66.66%,
-      #1f0404);
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff0000 33.33%,
+    #f51c1c 33.33%,
+    #400c0c 66.66%,
+    #492020 66.66%,
+    #1f0404
+  );
   z-index: -1;
   transition: opacity 0.3s ease-in-out;
   opacity: 1;
