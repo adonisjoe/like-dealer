@@ -7,11 +7,24 @@ function elementsSelect() {
   const instagramFollowerElement = document.querySelector(
     '.gcard-value--instagram-followers'
   );
+  const instagramFollowerTitle = document.querySelector(
+    '.gcard-value--instagram-followers-title'
+  );
+  const instagramLikeTitle = document.querySelector(
+    '.gcard-value--instagram-like-title'
+  );
+
   const tiktokVideoElement = document.querySelector(
     '.gcard-value--tiktok-likes'
   );
   const tiktokFollowersElement = document.querySelector(
     '.gcard-value--tiktok-followers'
+  );
+  const tiktokFollowerTitle = document.querySelector(
+    '.gcard-value--tiktok-followers-title'
+  );
+  const tiktokLikeTitle = document.querySelector(
+    '.gcard-value--tiktok-likes-title'
   );
   const facebookPostElement = document.querySelector(
     '.gcard-value--facebook-post'
@@ -19,9 +32,22 @@ function elementsSelect() {
   const facebookLikesElement = document.querySelector(
     '.gcard-value--facebook-likes'
   );
+  const facebookPostTitle = document.querySelector(
+    '.gcard-value--facebook-post-title'
+  );
+  const facebookLikesTitle = document.querySelector(
+    '.gcard-value--facebook-likes-title'
+  );
   const youtubeSubscriberElement = document.querySelector(
     '.gcard-value--subscribers'
   );
+
+  const youtubeSubscriberTitle = document.querySelector(
+    '.gcard-value--subscribers-title'
+  );
+  const youtubeViewTitle = document.querySelector('.gcard-value--views-title');
+  const youtubeLikesTitle = document.querySelector('.gcard-value--likes-title');
+
   const youtubeViewsElement = document.querySelector('.gcard-value--views');
   const youtubeLikesElement = document.querySelector('.gcard-value--likes');
 
@@ -29,13 +55,22 @@ function elementsSelect() {
     hiddenEl,
     facebookLikesElement,
     facebookPostElement,
+    facebookPostTitle,
+    facebookLikesTitle,
     tiktokVideoElement,
     tiktokFollowersElement,
+    tiktokFollowerTitle,
+    tiktokLikeTitle,
     instagramLikeElement,
+    instagramLikeTitle,
+    instagramFollowerTitle,
     instagramFollowerElement,
     youtubeSubscriberElement,
     youtubeViewsElement,
     youtubeLikesElement,
+    youtubeSubscriberTitle,
+    youtubeViewTitle,
+    youtubeLikesTitle,
   };
 }
 
@@ -43,13 +78,22 @@ function elementsSelect() {
 const {
   facebookLikesElement,
   facebookPostElement,
+  facebookPostTitle,
+  facebookLikesTitle,
   tiktokVideoElement,
   tiktokFollowersElement,
+  tiktokFollowerTitle,
+  tiktokLikeTitle,
   instagramLikeElement,
   instagramFollowerElement,
+  instagramLikeTitle,
+  instagramFollowerTitle,
   youtubeSubscriberElement,
   youtubeViewsElement,
   youtubeLikesElement,
+  youtubeSubscriberTitle,
+  youtubeViewTitle,
+  youtubeLikesTitle,
 } = elementsSelect();
 
 // Function to capitalize a string
@@ -84,8 +128,18 @@ function filterCardInfo(cardData) {
   const [facebookPost, facebookPage] = loopData(facebookData);
 
   if (checkProductElement(facebookLikesElement, facebookPostElement)) {
-    updateCardDetail(facebookPost, facebookPostElement, PER_1000);
-    updateCardDetail(facebookPage, facebookLikesElement, PER_1000);
+    updateCardDetail(
+      facebookPost,
+      facebookPostElement,
+      PER_1000,
+      facebookPostTitle
+    );
+    updateCardDetail(
+      facebookPage,
+      facebookLikesElement,
+      PER_1000,
+      facebookLikesTitle
+    );
 
     updateCardUrl('.gcard-facebook-post', facebookPost.paymentUrl);
     updateCardUrl('.gcard-facebook-page', facebookPage.paymentUrl);
@@ -95,8 +149,18 @@ function filterCardInfo(cardData) {
   const [tiktokLikes, tiktokFollowers] = loopData(tiktokData);
 
   if (checkProductElement(tiktokVideoElement, tiktokFollowersElement)) {
-    updateCardDetail(tiktokLikes, tiktokVideoElement, PER_1000);
-    updateCardDetail(tiktokFollowers, tiktokFollowersElement, PER_1000);
+    updateCardDetail(
+      tiktokLikes,
+      tiktokVideoElement,
+      PER_1000,
+      tiktokLikeTitle
+    );
+    updateCardDetail(
+      tiktokFollowers,
+      tiktokFollowersElement,
+      PER_1000,
+      tiktokFollowerTitle
+    );
 
     updateCardUrl('.gcard-tiktok-likes', tiktokLikes.paymentUrl);
     updateCardUrl('.gcard-tiktok-followers', tiktokFollowers.paymentUrl);
@@ -106,8 +170,18 @@ function filterCardInfo(cardData) {
   const [instagramLikes, instagramFollowers] = loopData(instagramData);
 
   if (checkProductElement(instagramLikeElement, instagramFollowerElement)) {
-    updateCardDetail(instagramLikes, instagramLikeElement, PER_1000);
-    updateCardDetail(instagramFollowers, instagramFollowerElement, PER_1000);
+    updateCardDetail(
+      instagramLikes,
+      instagramLikeElement,
+      PER_1000,
+      instagramLikeTitle
+    );
+    updateCardDetail(
+      instagramFollowers,
+      instagramFollowerElement,
+      PER_1000,
+      instagramFollowerTitle
+    );
 
     updateCardUrl('.gcard-instagram-likes', instagramLikes.paymentUrl);
     updateCardUrl('.gcard-instagram-follower', instagramFollowers.paymentUrl);
@@ -124,9 +198,24 @@ function filterCardInfo(cardData) {
       youtubeLikesElement
     )
   ) {
-    updateCardDetail(youtubeSubscribers, youtubeSubscriberElement, PER_1000);
-    updateCardDetail(youtubeLikes, youtubeLikesElement, PER_1000);
-    updateCardDetail(youtubeViews, youtubeViewsElement, PER_1000);
+    updateCardDetail(
+      youtubeSubscribers,
+      youtubeSubscriberElement,
+      PER_1000,
+      youtubeSubscriberTitle
+    );
+    updateCardDetail(
+      youtubeLikes,
+      youtubeLikesElement,
+      PER_1000,
+      youtubeLikesTitle
+    );
+    updateCardDetail(
+      youtubeViews,
+      youtubeViewsElement,
+      PER_1000,
+      youtubeViewTitle
+    );
 
     updateCardUrl('.gcard-youtube-likes', youtubeLikes.paymentUrl);
     updateCardUrl('.gcard-youtube-views', youtubeViews.paymentUrl);
@@ -143,8 +232,9 @@ function updateCardUrl(className, cardURL) {
 }
 
 // Function to update card detail
-function updateCardDetail(productType, productEl, pricePer) {
-  return (productEl.textContent = productType?.pricePer1000 + pricePer);
+function updateCardDetail(productType, productEl, pricePer, titleEL = '') {
+  productEl.textContent = productType?.pricePer1000 + pricePer;
+  titleEL.textContent = capitalize(productType?.type);
 }
 
 // Function to check if product elements exist

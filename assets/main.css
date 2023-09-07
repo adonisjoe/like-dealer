@@ -21,8 +21,8 @@
 a img {
   border: none;
   outline: none;
+  width: 70%;
 }
-
 a {
   text-decoration: none;
 }
