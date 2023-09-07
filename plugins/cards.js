@@ -1,18 +1,6 @@
-const {
-  facebookLikesElement,
-  facebookPostElement,
-  tiktokVideoElement,
-  tiktokFollowersElement,
-  instagramLikeElement,
-  instagramFollowerElement,
-  youtubeSubscriberElement,
-  youtubeViewsElement,
-  youtubeLikesElement,
-} = elementsSelect();
-
+// Function to select HTML elements
 function elementsSelect() {
   const hiddenEl = document.querySelector('#inner');
-
   const instagramLikeElement = document.querySelector(
     '.gcard-value--instagram-like'
   );
@@ -25,20 +13,18 @@ function elementsSelect() {
   const tiktokFollowersElement = document.querySelector(
     '.gcard-value--tiktok-followers'
   );
-
   const facebookPostElement = document.querySelector(
     '.gcard-value--facebook-post'
   );
   const facebookLikesElement = document.querySelector(
     '.gcard-value--facebook-likes'
   );
-
   const youtubeSubscriberElement = document.querySelector(
     '.gcard-value--subscribers'
   );
-
   const youtubeViewsElement = document.querySelector('.gcard-value--views');
   const youtubeLikesElement = document.querySelector('.gcard-value--likes');
+
   return {
     hiddenEl,
     facebookLikesElement,
@@ -53,6 +39,20 @@ function elementsSelect() {
   };
 }
 
+// Destructure the selected elements
+const {
+  facebookLikesElement,
+  facebookPostElement,
+  tiktokVideoElement,
+  tiktokFollowersElement,
+  instagramLikeElement,
+  instagramFollowerElement,
+  youtubeSubscriberElement,
+  youtubeViewsElement,
+  youtubeLikesElement,
+} = elementsSelect();
+
+// Function to capitalize a string
 function capitalize(inputString) {
   if (!inputString) {
     return '';
@@ -64,24 +64,24 @@ function capitalize(inputString) {
     .join(' ');
 }
 
+// Function to get cards by platform
 function getCardsByPlatform(cards, platform) {
   return cards.filter((card) => card?.platform === platform);
 }
 
+// Function to loop through data
 function loopData(productData) {
   return productData?.map((data) => data);
 }
 
+// Function to filter card information
 function filterCardInfo(cardData) {
   const PER_1000 = ' per 1k';
-  const MINIMUM_ORDER = 'Mininum order 1000.';
+  const MINIMUM_ORDER = 'Minimum order 1000.';
 
   // Update the card information here
   const facebookData = filterProducts(cardData, 'facebook');
   const [facebookPost, facebookPage] = loopData(facebookData);
-  // console.log(facebookData);
-
-  //  facebookData.map(el => { })
 
   if (checkProductElement(facebookLikesElement, facebookPostElement)) {
     updateCardDetail(facebookPost, facebookPostElement, PER_1000);
@@ -92,7 +92,6 @@ function filterCardInfo(cardData) {
   }
 
   const tiktokData = filterProducts(cardData, 'tiktok');
-
   const [tiktokLikes, tiktokFollowers] = loopData(tiktokData);
 
   if (checkProductElement(tiktokVideoElement, tiktokFollowersElement)) {
@@ -115,7 +114,6 @@ function filterCardInfo(cardData) {
   }
 
   const youtubeData = filterProducts(cardData, 'youtube');
-
   const [youtubeSubscribers, youtubeViews, youtubeLikes] =
     loopData(youtubeData);
 
@@ -136,21 +134,30 @@ function filterCardInfo(cardData) {
   }
 }
 
+// Function to update card URL
 function updateCardUrl(className, cardURL) {
-  return (document.querySelector(className).href = cardURL);
+  document.querySelector(className).addEventListener('click', function (e) {
+    window.open(cardURL, '_blank');
+    e.preventDefault();
+  });
 }
 
+// Function to update card detail
 function updateCardDetail(productType, productEl, pricePer) {
   return (productEl.textContent = productType?.pricePer1000 + pricePer);
 }
 
+// Function to check if product elements exist
 function checkProductElement(productEl, productEl1, productEl2 = '') {
   return productEl || productEl1 || productEl2;
 }
 
+// Function to filter products by platform
 function filterProducts(data, platform) {
   return data?.services?.filter((data) => data?.platform === platform);
 }
+
+// Function to fetch card data from an API
 async function fetchCardData(fetchUrl) {
   try {
     await fetch(fetchUrl).then((response) =>
@@ -167,6 +174,7 @@ async function fetchCardData(fetchUrl) {
   }
 }
 
+// Example usage: Fetch card data from the API
 fetchCardData(
   'https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/ldServices/services'
 );
