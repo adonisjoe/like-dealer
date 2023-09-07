@@ -1,6 +1,4 @@
 const {
-  modal,
-  hiddenEl,
   facebookLikesElement,
   facebookPostElement,
   tiktokVideoElement,
@@ -13,7 +11,6 @@ const {
 } = elementsSelect();
 
 function elementsSelect() {
-  const modal = document.querySelector('.modal');
   const hiddenEl = document.querySelector('#inner');
 
   const instagramLikeElement = document.querySelector(
@@ -43,7 +40,6 @@ function elementsSelect() {
   const youtubeViewsElement = document.querySelector('.gcard-value--views');
   const youtubeLikesElement = document.querySelector('.gcard-value--likes');
   return {
-    modal,
     hiddenEl,
     facebookLikesElement,
     facebookPostElement,
@@ -69,11 +65,11 @@ function capitalize(inputString) {
 }
 
 function getCardsByPlatform(cards, platform) {
-  return cards.filter((card) => card.platform === platform);
+  return cards.filter((card) => card?.platform === platform);
 }
 
 function loopData(productData) {
-  return productData.map((data) => data);
+  return productData?.map((data) => data);
 }
 
 function filterCardInfo(cardData) {
@@ -145,7 +141,7 @@ function updateCardUrl(className, cardURL) {
 }
 
 function updateCardDetail(productType, productEl, pricePer) {
-  return (productEl.textContent = productType.pricePer1000 + pricePer);
+  return (productEl.textContent = productType?.pricePer1000 + pricePer);
 }
 
 function checkProductElement(productEl, productEl1, productEl2 = '') {

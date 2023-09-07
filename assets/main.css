@@ -782,14 +782,13 @@ h1 {
   text-transform: uppercase;
 }
 
-
-.gcard-value--tiktok-followers, 
+.gcard-value--tiktok-followers,
 .gcard-value--tiktok-likes,
 .gcard-value--facebook-likes,
 .gcard-value--facebook-post {
   margin-top: -34px;
   margin-bottom: 10px;
-  color: white;
+  color: #50565b;
   font-weight: 700;
 }
 
@@ -883,9 +882,9 @@ h1 {
     z-index: 1;
   }
 
-    .page-title {
-      font-size: 1rem;
-    }
+  .page-title {
+    font-size: 1rem;
+  }
 
   #home {
     width: 100%;
