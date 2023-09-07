@@ -1062,8 +1062,10 @@ h1 {
   }
 }
 
-/* END OF MOBILE WEBSITE */
+@media only screen (max-width: 400px) {
+}
 
+/* END OF MOBILE WEBSITE */
 .wrapper {
   margin: 0 auto;
 }
