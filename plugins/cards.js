@@ -155,7 +155,6 @@ function checkProductElement(productEl, productEl1, productEl2 = '') {
 function filterProducts(data, platform) {
   return data?.services?.filter((data) => data?.platform === platform);
 }
-
 async function fetchCardData(fetchUrl) {
   try {
     await fetch(fetchUrl).then((response) =>
