@@ -45,6 +45,8 @@ function elementsSelect() {
   const youtubeSubscriberTitle = document.querySelector(
     '.gcard-value--subscribers-title'
   );
+
+  const cardsEl = document.querySelectorAll('.gcard');
   const youtubeViewTitle = document.querySelector('.gcard-value--views-title');
   const youtubeLikesTitle = document.querySelector('.gcard-value--likes-title');
 
@@ -71,6 +73,7 @@ function elementsSelect() {
     youtubeSubscriberTitle,
     youtubeViewTitle,
     youtubeLikesTitle,
+    cardsEl,
   };
 }
 
@@ -94,6 +97,7 @@ const {
   youtubeSubscriberTitle,
   youtubeViewTitle,
   youtubeLikesTitle,
+  cardsEl,
 } = elementsSelect();
 
 // Function to capitalize a string
@@ -143,6 +147,10 @@ function filterCardInfo(cardData) {
 
     updateCardUrl('.gcard-facebook-post', facebookPost.paymentUrl);
     updateCardUrl('.gcard-facebook-page', facebookPage.paymentUrl);
+
+    facebookData.forEach((isVisible) => {
+      isCardPresent(isVisible, cardsEl);
+    });
   }
 
   const tiktokData = filterProducts(cardData, 'tiktok');
@@ -164,6 +172,10 @@ function filterCardInfo(cardData) {
 
     updateCardUrl('.gcard-tiktok-likes', tiktokLikes.paymentUrl);
     updateCardUrl('.gcard-tiktok-followers', tiktokFollowers.paymentUrl);
+
+    tiktokData.forEach((isVisible) => {
+      isCardPresent(isVisible, cardsEl);
+    });
   }
 
   const instagramData = filterProducts(cardData, 'instagram');
@@ -185,6 +197,10 @@ function filterCardInfo(cardData) {
 
     updateCardUrl('.gcard-instagram-likes', instagramLikes.paymentUrl);
     updateCardUrl('.gcard-instagram-follower', instagramFollowers.paymentUrl);
+
+    instagramData.forEach((data) => {
+      isCardPresent(data.visible, cardsEl);
+    });
   }
 
   const youtubeData = filterProducts(cardData, 'youtube');
@@ -220,12 +236,29 @@ function filterCardInfo(cardData) {
     updateCardUrl('.gcard-youtube-likes', youtubeLikes.paymentUrl);
     updateCardUrl('.gcard-youtube-views', youtubeViews.paymentUrl);
     updateCardUrl('.gcard-youtube-subscribers', youtubeSubscribers.paymentUrl);
+
+    youtubeData.forEach((isVisible) => {
+      isCardPresent(isVisible, cardsEl);
+    });
+  }
+}
+
+//Function to check if card is set to TRUE and display the corresponding card
+function isCardPresent(valueToCheck, el) {
+  if (valueToCheck) {
+    el.forEach((el) => (el.style.display = 'block')); // Show the el if the value is true
+  } else {
+    // Hide the el if the value is false
+    el.forEach((el) => {
+      el.style.display = 'none';
+      el.textContent = 'no card to show';
+    });
   }
 }
 
 // Function to update card URL
 function updateCardUrl(className, cardURL) {
-  document.querySelector(className).addEventListener('click', function (e) {
+  document.querySelector(className)?.addEventListener('click', function (e) {
     window.open(cardURL, '_blank');
     e.preventDefault();
   });
@@ -239,7 +272,7 @@ function updateCardDetail(productType, productEl, pricePer, titleEL = '') {
 
 // Function to check if product elements exist
 function checkProductElement(productEl, productEl1, productEl2 = '') {
-  return productEl || productEl1 || productEl2;
+  return (productEl && productEl1) || productEl2;
 }
 
 // Function to filter products by platform
