@@ -119,7 +119,7 @@ function getCardsByPlatform(cards, platform) {
 
 // Function to loop through data
 function loopData(productData) {
-  return productData?.map((data) => data);
+  return productData.map((data) => data);
 }
 
 // Function to filter card information
@@ -145,12 +145,8 @@ function filterCardInfo(cardData) {
       facebookLikesTitle
     );
 
-    updateCardUrl('.gcard-facebook-post', facebookPost.paymentUrl);
-    updateCardUrl('.gcard-facebook-page', facebookPage.paymentUrl);
-
-    facebookData.forEach((isVisible) => {
-      isCardPresent(isVisible, cardsEl);
-    });
+    updateCardUrl('.gcard-facebook-post', facebookPost?.paymentUrl);
+    updateCardUrl('.gcard-facebook-page', facebookPage?.paymentUrl);
   }
 
   const tiktokData = filterProducts(cardData, 'tiktok');
@@ -172,10 +168,6 @@ function filterCardInfo(cardData) {
 
     updateCardUrl('.gcard-tiktok-likes', tiktokLikes.paymentUrl);
     updateCardUrl('.gcard-tiktok-followers', tiktokFollowers.paymentUrl);
-
-    tiktokData.forEach((isVisible) => {
-      isCardPresent(isVisible, cardsEl);
-    });
   }
 
   const instagramData = filterProducts(cardData, 'instagram');
@@ -197,10 +189,6 @@ function filterCardInfo(cardData) {
 
     updateCardUrl('.gcard-instagram-likes', instagramLikes.paymentUrl);
     updateCardUrl('.gcard-instagram-follower', instagramFollowers.paymentUrl);
-
-    instagramData.forEach((data) => {
-      isCardPresent(data.visible, cardsEl);
-    });
   }
 
   const youtubeData = filterProducts(cardData, 'youtube');
@@ -233,40 +221,25 @@ function filterCardInfo(cardData) {
       youtubeViewTitle
     );
 
-    updateCardUrl('.gcard-youtube-likes', youtubeLikes.paymentUrl);
-    updateCardUrl('.gcard-youtube-views', youtubeViews.paymentUrl);
-    updateCardUrl('.gcard-youtube-subscribers', youtubeSubscribers.paymentUrl);
-
-    youtubeData.forEach((isVisible) => {
-      isCardPresent(isVisible, cardsEl);
-    });
-  }
-}
-
-//Function to check if card is set to TRUE and display the corresponding card
-function isCardPresent(valueToCheck, el) {
-  if (valueToCheck) {
-    el.forEach((el) => (el.style.display = 'block')); // Show the el if the value is true
-  } else {
-    // Hide the el if the value is false
-    el.forEach((el) => {
-      el.style.display = 'none';
-      el.textContent = 'no card to show';
-    });
+    updateCardUrl('.gcard-youtube-likes', youtubeLikes?.paymentUrl);
+    updateCardUrl('.gcard-youtube-views', youtubeViews?.paymentUrl);
+    updateCardUrl('.gcard-youtube-subscribers', youtubeSubscribers?.paymentUrl);
   }
 }
 
 // Function to update card URL
 function updateCardUrl(className, cardURL) {
   document.querySelector(className)?.addEventListener('click', function (e) {
-    window.open(cardURL, '_blank');
+    cardURL && window.open(cardURL, '_blank');
     e.preventDefault();
   });
 }
 
 // Function to update card detail
 function updateCardDetail(productType, productEl, pricePer, titleEL = '') {
-  productEl.textContent = productType?.pricePer1000 + pricePer;
+  productEl.textContent = productType
+    ? productType?.pricePer1000 + pricePer
+    : capitalize(`not available`);
   titleEL.textContent = capitalize(productType?.type);
 }
 
@@ -275,9 +248,16 @@ function checkProductElement(productEl, productEl1, productEl2 = '') {
   return (productEl && productEl1) || productEl2;
 }
 
+// Function to filter cards by visibility
+function filterCards(data) {
+  return data?.visible;
+}
+
 // Function to filter products by platform
 function filterProducts(data, platform) {
-  return data?.services?.filter((data) => data?.platform === platform);
+  return data?.services
+    ?.filter((data) => data?.platform === platform)
+    ?.filter((data) => !data?.visible);
 }
 
 // Function to fetch card data from an API
