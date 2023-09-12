@@ -257,7 +257,7 @@ function filterCards(data) {
 function filterProducts(data, platform) {
   return data?.services
     ?.filter((data) => data?.platform === platform)
-    ?.filter((data) => !data?.visible);
+    ?.filter((data) => data?.visible);
 }
 
 // Function to fetch card data from an API
