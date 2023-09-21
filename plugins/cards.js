@@ -119,7 +119,8 @@ function getCardsByPlatform(cards, platform) {
 
 // Function to loop through data
 function loopData(productData) {
-  return productData.map((data) => data);
+  console.log(productData);
+  return productData?.map((data) => data);
 }
 
 // Function to filter card information
@@ -127,8 +128,11 @@ function filterCardInfo(cardData) {
   const PER_1000 = ' per 1k';
   const MINIMUM_ORDER = 'Minimum order 1000.';
 
+  const visibleCards = cardData.services?.filter((data) => data?.visible);
+
   // Update the card information here
-  const facebookData = filterProducts(cardData, 'facebook');
+  const facebookData = filterProducts(visibleCards, 'facebook');
+
   const [facebookPost, facebookPage] = loopData(facebookData);
 
   if (checkProductElement(facebookLikesElement, facebookPostElement)) {
@@ -149,7 +153,8 @@ function filterCardInfo(cardData) {
     updateCardUrl('.gcard-facebook-page', facebookPage?.paymentUrl);
   }
 
-  const tiktokData = filterProducts(cardData, 'tiktok');
+  const tiktokData = filterProducts(visibleCards, 'tiktok');
+  console.log(tiktokData);
   const [tiktokLikes, tiktokFollowers] = loopData(tiktokData);
 
   if (checkProductElement(tiktokVideoElement, tiktokFollowersElement)) {
@@ -166,12 +171,15 @@ function filterCardInfo(cardData) {
       tiktokFollowerTitle
     );
 
-    updateCardUrl('.gcard-tiktok-likes', tiktokLikes.paymentUrl);
-    updateCardUrl('.gcard-tiktok-followers', tiktokFollowers.paymentUrl);
+    updateCardUrl('.gcard-tiktok-likes', tiktokLikes?.paymentUrl);
+    updateCardUrl('.gcard-tiktok-followers', tiktokFollowers?.paymentUrl);
   }
 
-  const instagramData = filterProducts(cardData, 'instagram');
+  const instagramData = filterProducts(visibleCards, 'instagram');
   const [instagramLikes, instagramFollowers] = loopData(instagramData);
+
+  console.log(cardData);
+  console.log(visibleCards);
 
   if (checkProductElement(instagramLikeElement, instagramFollowerElement)) {
     updateCardDetail(
@@ -187,11 +195,12 @@ function filterCardInfo(cardData) {
       instagramFollowerTitle
     );
 
-    updateCardUrl('.gcard-instagram-likes', instagramLikes.paymentUrl);
-    updateCardUrl('.gcard-instagram-follower', instagramFollowers.paymentUrl);
+    updateCardUrl('.gcard-instagram-likes', instagramLikes?.paymentUrl);
+    updateCardUrl('.gcard-instagram-follower', instagramFollowers?.paymentUrl);
   }
 
-  const youtubeData = filterProducts(cardData, 'youtube');
+  const youtubeData = filterProducts(visibleCards, 'youtube');
+  console.log(youtubeData);
   const [youtubeSubscribers, youtubeViews, youtubeLikes] =
     loopData(youtubeData);
 
@@ -237,9 +246,8 @@ function updateCardUrl(className, cardURL) {
 
 // Function to update card detail
 function updateCardDetail(productType, productEl, pricePer, titleEL = '') {
-  productEl.textContent = productType
-    ? productType?.pricePer1000 + pricePer
-    : capitalize(`not available`);
+  console.log(productType);
+  productEl.textContent = productType?.pricePer1000 + pricePer;
   titleEL.textContent = capitalize(productType?.type);
 }
 
@@ -255,21 +263,21 @@ function filterCards(data) {
 
 // Function to filter products by platform
 function filterProducts(data, platform) {
-  return data?.services
-    ?.filter((data) => data?.platform === platform)
-    ?.filter((data) => data?.visible);
+  console.log(data);
+  return data?.filter((data) => data?.platform === platform);
 }
 
 // Function to fetch card data from an API
 async function fetchCardData(fetchUrl) {
   try {
     await fetch(fetchUrl).then((response) =>
-      response?.json()?.then((cardData) => {
-        if (!cardData) {
+      response?.json()?.then((data) => {
+        console.log(data);
+        if (!data) {
           throw new Error('Network response was not ok');
         }
         // Update card information
-        filterCardInfo(cardData);
+        filterCardInfo(data);
       })
     );
   } catch (error) {
