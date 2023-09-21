@@ -45,6 +45,8 @@ function elementsSelect() {
   const youtubeSubscriberTitle = document.querySelector(
     '.gcard-value--subscribers-title'
   );
+
+  const cardsEl = document.querySelectorAll('.gcard');
   const youtubeViewTitle = document.querySelector('.gcard-value--views-title');
   const youtubeLikesTitle = document.querySelector('.gcard-value--likes-title');
 
@@ -71,6 +73,7 @@ function elementsSelect() {
     youtubeSubscriberTitle,
     youtubeViewTitle,
     youtubeLikesTitle,
+    cardsEl,
   };
 }
 
@@ -94,6 +97,7 @@ const {
   youtubeSubscriberTitle,
   youtubeViewTitle,
   youtubeLikesTitle,
+  cardsEl,
 } = elementsSelect();
 
 // Function to capitalize a string
@@ -115,6 +119,7 @@ function getCardsByPlatform(cards, platform) {
 
 // Function to loop through data
 function loopData(productData) {
+  console.log(productData);
   return productData?.map((data) => data);
 }
 
@@ -123,8 +128,11 @@ function filterCardInfo(cardData) {
   const PER_1000 = ' per 1k';
   const MINIMUM_ORDER = 'Minimum order 1000.';
 
+  const visibleCards = cardData.services?.filter((data) => data?.visible);
+
   // Update the card information here
-  const facebookData = filterProducts(cardData, 'facebook');
+  const facebookData = filterProducts(visibleCards, 'facebook');
+
   const [facebookPost, facebookPage] = loopData(facebookData);
 
   if (checkProductElement(facebookLikesElement, facebookPostElement)) {
@@ -141,11 +149,12 @@ function filterCardInfo(cardData) {
       facebookLikesTitle
     );
 
-    updateCardUrl('.gcard-facebook-post', facebookPost.paymentUrl);
-    updateCardUrl('.gcard-facebook-page', facebookPage.paymentUrl);
+    updateCardUrl('.gcard-facebook-post', facebookPost?.paymentUrl);
+    updateCardUrl('.gcard-facebook-page', facebookPage?.paymentUrl);
   }
 
-  const tiktokData = filterProducts(cardData, 'tiktok');
+  const tiktokData = filterProducts(visibleCards, 'tiktok');
+  console.log(tiktokData);
   const [tiktokLikes, tiktokFollowers] = loopData(tiktokData);
 
   if (checkProductElement(tiktokVideoElement, tiktokFollowersElement)) {
@@ -162,12 +171,15 @@ function filterCardInfo(cardData) {
       tiktokFollowerTitle
     );
 
-    updateCardUrl('.gcard-tiktok-likes', tiktokLikes.paymentUrl);
-    updateCardUrl('.gcard-tiktok-followers', tiktokFollowers.paymentUrl);
+    updateCardUrl('.gcard-tiktok-likes', tiktokLikes?.paymentUrl);
+    updateCardUrl('.gcard-tiktok-followers', tiktokFollowers?.paymentUrl);
   }
 
-  const instagramData = filterProducts(cardData, 'instagram');
+  const instagramData = filterProducts(visibleCards, 'instagram');
   const [instagramLikes, instagramFollowers] = loopData(instagramData);
+
+  console.log(cardData);
+  console.log(visibleCards);
 
   if (checkProductElement(instagramLikeElement, instagramFollowerElement)) {
     updateCardDetail(
@@ -183,11 +195,12 @@ function filterCardInfo(cardData) {
       instagramFollowerTitle
     );
 
-    updateCardUrl('.gcard-instagram-likes', instagramLikes.paymentUrl);
-    updateCardUrl('.gcard-instagram-follower', instagramFollowers.paymentUrl);
+    updateCardUrl('.gcard-instagram-likes', instagramLikes?.paymentUrl);
+    updateCardUrl('.gcard-instagram-follower', instagramFollowers?.paymentUrl);
   }
 
-  const youtubeData = filterProducts(cardData, 'youtube');
+  const youtubeData = filterProducts(visibleCards, 'youtube');
+  console.log(youtubeData);
   const [youtubeSubscribers, youtubeViews, youtubeLikes] =
     loopData(youtubeData);
 
@@ -217,46 +230,54 @@ function filterCardInfo(cardData) {
       youtubeViewTitle
     );
 
-    updateCardUrl('.gcard-youtube-likes', youtubeLikes.paymentUrl);
-    updateCardUrl('.gcard-youtube-views', youtubeViews.paymentUrl);
-    updateCardUrl('.gcard-youtube-subscribers', youtubeSubscribers.paymentUrl);
+    updateCardUrl('.gcard-youtube-likes', youtubeLikes?.paymentUrl);
+    updateCardUrl('.gcard-youtube-views', youtubeViews?.paymentUrl);
+    updateCardUrl('.gcard-youtube-subscribers', youtubeSubscribers?.paymentUrl);
   }
 }
 
 // Function to update card URL
 function updateCardUrl(className, cardURL) {
-  document.querySelector(className).addEventListener('click', function (e) {
-    window.open(cardURL, '_blank');
+  document.querySelector(className)?.addEventListener('click', function (e) {
+    cardURL && window.open(cardURL, '_blank');
     e.preventDefault();
   });
 }
 
 // Function to update card detail
 function updateCardDetail(productType, productEl, pricePer, titleEL = '') {
+  console.log(productType);
   productEl.textContent = productType?.pricePer1000 + pricePer;
   titleEL.textContent = capitalize(productType?.type);
 }
 
 // Function to check if product elements exist
 function checkProductElement(productEl, productEl1, productEl2 = '') {
-  return productEl || productEl1 || productEl2;
+  return (productEl && productEl1) || productEl2;
+}
+
+// Function to filter cards by visibility
+function filterCards(data) {
+  return data?.visible;
 }
 
 // Function to filter products by platform
 function filterProducts(data, platform) {
-  return data?.services?.filter((data) => data?.platform === platform);
+  console.log(data);
+  return data?.filter((data) => data?.platform === platform);
 }
 
 // Function to fetch card data from an API
 async function fetchCardData(fetchUrl) {
   try {
     await fetch(fetchUrl).then((response) =>
-      response?.json()?.then((cardData) => {
-        if (!cardData) {
+      response?.json()?.then((data) => {
+        console.log(data);
+        if (!data) {
           throw new Error('Network response was not ok');
         }
         // Update card information
-        filterCardInfo(cardData);
+        filterCardInfo(data);
       })
     );
   } catch (error) {
