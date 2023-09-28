@@ -293,16 +293,16 @@ h1 {
   width: 30%;
   height: 0;
   padding-top: 42.5%;
-  margin-right: 5%;
+  margin-right: 3%;
   margin-bottom: 5%;
   cursor: pointer;
   transform-origin: 50% 0;
   display: block;
 }
 
-.home-card:nth-child(3n) {
+/* .home-card:nth-child(3n) {
   margin-right: 0;
-}
+} */
 
 .home-card-title {
   display: none;
