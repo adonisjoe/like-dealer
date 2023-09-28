@@ -355,7 +355,7 @@ h1 {
   cursor: pointer;
 }
 
-#content p {
+.content p {
   color: #23262b;
   font-size: 1.25rem;
   line-height: 26px;
@@ -365,11 +365,11 @@ h1 {
   letter-spacing: 0.2px;
 }
 
-#content p + p {
+.content p + p {
   margin-top: 10px;
 }
 
-#content h2 {
+.content h2 {
   text-align: center;
   font-size: 24px;
   font-weight: 700;
@@ -394,7 +394,7 @@ h1 {
   width: 30%;
   height: 0;
   padding-top: 42.5%;
-  margin-right: 5%;
+  margin-right: 3%;
   cursor: pointer;
   transform-origin: 50% 0;
   display: block;
@@ -405,9 +405,9 @@ h1 {
   height: 100%;
 }
 
-.gcard:nth-child(3n) {
+/* .gcard:nth-child(3n) {
   margin-right: 0;
-}
+} */
 
 .gcard-front {
   position: absolute;
@@ -453,8 +453,20 @@ h1 {
   bottom: 7px;
   color: #50565b;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
 }
+
+.gcard-type {
+  bottom: auto;
+  top: 7px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.gcard-type p { 
+  color: #50565b;
+}
+
 .service-title {
   text-align: center;
 }
@@ -925,19 +937,19 @@ h1 {
     margin-bottom: 60px !important;
   }
 
-  #content h2 {
+  .content h2 {
     font-size: 5vw;
     line-height: 6.5vw;
     margin: 7vw 0 4vw;
   }
 
-  #content p {
+  .content p {
     font-size: 4vw;
     line-height: 5.4vw;
     letter-spacing: 0.1vw;
   }
 
-  #content p + p {
+  .content p + p {
     margin-top: 4vw;
   }
 
@@ -1301,4 +1313,54 @@ input:focus {
 
 .button--youtube::after {
   opacity: 1;
+}
+
+
+.lds-ripple {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  left: 35%;
+  top: 5rem;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 4px solid #fff;
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  4.9% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  5% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 72px;
+    opacity: 0;
+  }
 }
